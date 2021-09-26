@@ -19,7 +19,6 @@ function Register() {
             password_confirmation: value.passwordConfirmation
         })
             .then(({ user, token }) => {
-                console.log("tset");
                 setCurrentUser(user);
                 setToken(token);
                 history.push("/dashboard");
@@ -88,6 +87,7 @@ function Register() {
                                             component={InputField}
                                             label="Full Name"
                                             name="fname"
+                                            placeholder="First Name"
                                             id="fname"
                                             type="text"
                                         />
@@ -95,6 +95,7 @@ function Register() {
                                             component={InputField}
                                             label=""
                                             name="lname"
+                                            placeholder="Last Name"
                                             id="lname"
                                             type="text"
                                         />
