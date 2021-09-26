@@ -59,7 +59,7 @@ function InputField({ field, form, forgotPassword, label, type, ...rest }) {
                                 onClick={onToggleVisible}
                                 form="{}"
                             >
-                                Show
+                                {showHidePassword ? "Hide" : "Show"}
                             </button>
                         )}
                     </div>
