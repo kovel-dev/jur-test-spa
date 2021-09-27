@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { useAuth } from "../../context/auth";
@@ -6,10 +6,13 @@ import { login } from "../../api/auth";
 import { getIntendedUrl } from "../../utils/auth";
 import InputField from "../../components/form/InputField";
 import { schemaForLoginForm } from "./schema";
+import { EmbedLoginContext } from "./embed-context-auth";
 
 function Login() {
     let { setCurrentUser, setToken } = useAuth();
     let history = useHistory();
+
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = value => {
         login({
@@ -22,9 +25,7 @@ function Login() {
                 history.push(getIntendedUrl());
             })
             .catch(error => {
-                error
-                    .json()
-                    .then(({ errors }) => email.parseServerError(errors));
+                error.json().then(({ errors }) => setErrors(errors));
             });
     };
 
@@ -76,6 +77,7 @@ function Login() {
                                             name="email"
                                             id="email"
                                             type="email"
+                                            serverError={errors}
                                         />
                                     </div>
                                     <Field
@@ -107,6 +109,7 @@ function Login() {
                                             Sign In
                                         </button>
                                     </div>
+                                    <EmbedLoginContext errs={errors} />
                                 </Form>
                             );
                         }}

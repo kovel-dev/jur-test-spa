@@ -5,13 +5,15 @@ import { useAuth } from "../../context/auth";
 import { register } from "../../api/auth";
 import InputField from "../../components/form/InputField";
 import { schemaForRegisterForm } from "./schema";
+import { EmbedRegisterContext } from "./embed-context-auth";
 
 function Register() {
     let history = useHistory();
     let { setCurrentUser, setToken } = useAuth();
 
+    const [errors, setErrors] = useState({});
+
     const handleSubmit = value => {
-        console.log(value);
         register({
             name: value.fname + " " + value.lname,
             email: value.email,
@@ -25,14 +27,7 @@ function Register() {
             })
             .catch(error => {
                 error.json().then(({ errors }) => {
-                    [
-                        email,
-                        fname,
-                        lname,
-                        password
-                    ].forEach(({ parseServerError }) =>
-                        parseServerError(errors)
-                    );
+                    setErrors(errors);
                 });
             });
     };
@@ -146,6 +141,7 @@ function Register() {
                                             Sign In
                                         </button>
                                     </div>
+                                    <EmbedRegisterContext errs={errors} />
                                 </Form>
                             );
                         }}

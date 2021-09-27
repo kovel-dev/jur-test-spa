@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import { getIn } from "formik";
 import { Link } from "react-router-dom";
 
-function InputField({ field, form, forgotPassword, label, type, ...rest }) {
+function InputField({
+    field,
+    form,
+    forgotPassword,
+    label,
+    type,
+    helperText,
+    serverError,
+    ...rest
+}) {
     const error = getIn(form.errors, field.name);
     const touched = getIn(form.touched, field.name);
 
@@ -69,6 +78,7 @@ function InputField({ field, form, forgotPassword, label, type, ...rest }) {
                         }`}
                     >
                         {error ? error : "Error"}
+                        {helperText}
                     </span>
                 </div>
             );
